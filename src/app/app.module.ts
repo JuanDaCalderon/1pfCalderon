@@ -15,6 +15,8 @@ import { SignupComponent } from './components/signup/signup.component';
 import { HeaderToolbarComponent } from './components/header-toolbar/header-toolbar.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { AlumnosComponent } from './components/alumnos/alumnos.component';
+import { CursosComponent } from './components/cursos/cursos.component';
+import { ClasesComponent } from './components/clases/clases.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,9 @@ import { AlumnosComponent } from './components/alumnos/alumnos.component';
     SignupComponent,
     HeaderToolbarComponent,
     MenuComponent,
-    AlumnosComponent
+    AlumnosComponent,
+    CursosComponent,
+    ClasesComponent
   ],
   imports: [
     BrowserModule,
