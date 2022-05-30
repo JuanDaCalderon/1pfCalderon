@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-
+import { AccessService } from 'src/app/services/access.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -13,7 +14,9 @@ import { ToastrService } from 'ngx-toastr';
 export class LoginComponent implements OnInit {
   emailFormControl = new FormControl('', [Validators.required, Validators.email]);
   loginForm: FormGroup;
-  constructor(private toastr: ToastrService) { }
+  isLoading: boolean = false;
+
+  constructor(private router: Router, private loginService: AccessService, private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({
@@ -24,9 +27,29 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.loginForm.value);
-    /* let body = this.loginForm.value.email + " | " + this.loginForm.value.password
-    this.toastr.success(body, 'Inicio de sesión exitoso'); */
+    this.isLoading = true;
+    let user = { email: this.loginForm?.value.email, password: this.loginForm?.value.password };
+    this.loginService.login(user)
+      .subscribe({
+        next: (response) => {
+          if (typeof response === 'object') {
+            this.toastr.success('Has iniciado sesión correctamente');
+            setTimeout(() => {
+              this.router.navigate(['/alumnos']);
+            }, 1000);
+          }
+          else {
+            this.toastr.error(response);
+          }
+          this.isLoading = false;
+        },
+        error: (error) => {
+          this.toastr.error(error);
+          this.isLoading = false;
+        },
+        complete: () => {
+          this.isLoading = false;
+        }
+      });
   }
-
 }
