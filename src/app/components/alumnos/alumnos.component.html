@@ -12,7 +12,7 @@
     </div>
 </div>
 
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table m-auto">
+<!-- <table mat-table #alumnTable [dataSource]="dataSource" class="mat-elevation-z8 demo-table m-auto">
     <ng-container *ngFor="let column of columns" [matColumnDef]="column.columnDef">
         <th mat-header-cell *matHeaderCellDef>
             {{column.header}}
@@ -24,4 +24,49 @@
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table> -->
+
+<table mat-table [dataSource]="data" class="mat-elevation-z8 demo-table m-auto">
+    <ng-container matColumnDef="select">
+        <th mat-header-cell *matHeaderCellDef>
+            <mat-checkbox
+                (change)="$event ? masterToggle() : null"
+                [checked]="selection.hasValue() && isAllSelected()"
+                [indeterminate]="selection.hasValue() && !isAllSelected()"
+                [aria-label]="checkboxLabel()">
+            </mat-checkbox>
+        </th>
+        <td mat-cell *matCellDef="let row">
+            <mat-checkbox
+                (click)="$event.stopPropagation()"
+                (change)="$event ? selection.toggle(row) : null"
+                [checked]="selection.isSelected(row)"
+                [aria-label]="checkboxLabel(row)">
+            </mat-checkbox>
+        </td>
+    </ng-container>
+    <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> <strong appHeadersTitles>{{ 'Id' | uppercase}}</strong> </th>
+        <td mat-cell *matCellDef="let alumno"> {{alumno.id}}</td>
+    </ng-container>
+    <ng-container matColumnDef="nombre">
+        <th mat-header-cell *matHeaderCellDef> <strong appHeadersTitles>{{ 'Nombre' | uppercase }}</strong></th>
+        <td mat-cell *matCellDef="let alumno"> {{alumno.nombre | nameOutput:'other last name':15}}</td>
+    </ng-container>
+    <ng-container matColumnDef="curso">
+        <th mat-header-cell *matHeaderCellDef> <strong appHeadersTitles>{{ 'Curso' | uppercase }}</strong></th>
+        <td mat-cell *matCellDef="let alumno"> {{alumno.curso}}</td>
+    </ng-container>
+    <ng-container matColumnDef="clases">
+        <th mat-header-cell *matHeaderCellDef> <strong appHeadersTitles>{{ 'Clases' | uppercase }}</strong> </th>
+        <td mat-cell *matCellDef="let alumno"> {{alumno.clases}}</td>
+    </ng-container>
+    <ng-container matColumnDef="avatar">
+        <th mat-header-cell *matHeaderCellDef> <strong appHeadersTitles>{{ 'imagén' | uppercase }}</strong> </th>
+        <td mat-cell *matCellDef="let alumno">
+            <img class="img-fluid rounded-circle" width="50px" [src]="alumno.avatar">
+        </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="columnsToDisplay" appHeadersTitles></tr>
+    <tr mat-row *matRowDef="let myRowData; columns: columnsToDisplay" (click)="selection.toggle(myRowData)"></tr>
 </table>

@@ -1,10 +1,9 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
+import { SelectionModel } from '@angular/cdk/collections';
 import { alumnosOutput } from 'src/app/other/users';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { AlumnosService } from 'src/app/services/alumnos.service';
 import { ToastrService } from 'ngx-toastr';
-
-
 
 @Component({
   selector: 'app-alumnos',
@@ -14,56 +13,38 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class AlumnosComponent implements OnInit {
   titulo: string = 'Alumnos';
-  ELEMENT_DATA:any[] = [
-    {id: '1', nombre: 'pepe', curso: 2, clases: [1], avatar: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/104.jpg'}
-  ];
-  dataSource = new MatTableDataSource<alumnosOutput>(this.ELEMENT_DATA);
-  columns = [
-    {
-      columnDef: 'id',
-      header: 'id.',
-      cell: (element: alumnosOutput) => `${element.id}`,
-    },
-    {
-      columnDef: 'nombre',
-      header: 'nombre',
-      cell: (element: alumnosOutput) => `${element.nombre}`,
-    },
-    {
-      columnDef: 'curso',
-      header: 'curso',
-      cell: (element: alumnosOutput) => `${element.curso}`,
-    },
-    {
-      columnDef: 'clases',
-      header: 'clases',
-      cell: (element: alumnosOutput) => `${element.clases}`,
+  data: alumnosOutput[] = [];
+  columnsToDisplay: string[] = ['select', 'id', 'nombre', 'curso', 'clases', 'avatar'];
+  selection = new SelectionModel<alumnosOutput>(true, []);
+
+  constructor(private alumoService: AlumnosService) {
+    this.alumoService.getAlumnos().subscribe(response => {
+      this.data = response;
+      console.log(this.data);
+    })
+  }
+
+  ngOnInit(): void { }
+
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.data.length;
+    return numSelected === numRows;
+  }
+
+  masterToggle() {
+    if (this.isAllSelected()) {
+      this.selection.clear();
+      return;
     }
-  ];
-  displayedColumns = this.columns.map(c => c.columnDef);
-
-  constructor(private alumoService: AlumnosService, private toastr: ToastrService) {
-    this.alumoService.getAlumnos()
-    .subscribe({
-      next: (response) => {
-        this.ELEMENT_DATA = response;
-      },
-      error: (error) => {
-        this.toastr.error(error);
-      },
-    })
+    this.selection.select(...this.data);
   }
 
-  ngOnInit(): void {
-    this.alumoService.getAlumnos()
-    .subscribe({
-      next: (response) => {
-        this.ELEMENT_DATA = response;
-      },
-      error: (error) => {
-        this.toastr.error(error);
-      },
-    })
+  /** The label for the checkbox on the passed row */
+  checkboxLabel(row?: alumnosOutput): string {
+    if (!row) {
+      return `${this.isAllSelected() ? 'selected' : 'noSelected'} all`;
+    }
+    return `${this.selection.isSelected(row) ? 'selected' : 'noSelected'} row ${row.id}`;
   }
-
 }

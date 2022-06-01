@@ -17,6 +17,8 @@ import { MenuComponent } from './components/menu/menu.component';
 import { AlumnosComponent } from './components/alumnos/alumnos.component';
 import { CursosComponent } from './components/cursos/cursos.component';
 import { ClasesComponent } from './components/clases/clases.component';
+import { NameOutputPipe } from './pipes/name-output.pipe';
+import { HeadersTitlesDirective } from './directives/headers-titles.directive';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,9 @@ import { ClasesComponent } from './components/clases/clases.component';
     MenuComponent,
     AlumnosComponent,
     CursosComponent,
-    ClasesComponent
+    ClasesComponent,
+    NameOutputPipe,
+    HeadersTitlesDirective
   ],
   imports: [
     BrowserModule,

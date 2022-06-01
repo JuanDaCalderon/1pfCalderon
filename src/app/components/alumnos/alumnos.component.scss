@@ -2,7 +2,30 @@ body {
     align-items: center;
     background-color: #303030;
 }
-
 .demo-table {
     width: 80%;
-  }
+}
+
+.mat-column-select {
+    width: 80px;
+    border-right: 1px solid currentColor;
+    padding-right: 24px !important;
+    text-align: center !important;
+}
+
+.mat-column-id {
+    width: 80px;
+    border-right: 1px solid currentColor;
+    text-align: center !important;
+}
+
+.mat-column-nombre, .mat-column-curso, .mat-column-clases {
+    border-right: 1px solid currentColor;
+    text-align: center !important;
+}
+
+.mat-column-avatar {
+    width: 150px;
+    text-align: center !important;
+    padding-right: 0px !important;
+}
