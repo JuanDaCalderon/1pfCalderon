@@ -18,7 +18,7 @@ export class AlumnosService {
             let alumno: alumnosOutput;
             alumno = {
               id: data[id].id,
-              nombre: data[id].firstName + " " + data[id].middleName + " " + data[id].LastName,
+              nombre: data[id].firstName + " " + data[id].middleName + " " + data[id].lastName,
               curso: data[id].curso,
               clases: data[id].clases,
               avatar: data[id].avatar
@@ -30,6 +30,21 @@ export class AlumnosService {
         catchError(err => {
           let message: string;
           message = 'Error intentando traer los alumnos, intenta más tarde'
+          return throwError(() => message);
+        })
+      )
+  }
+
+  postAlumno(alumno: { firstName: string, middleName: string, lastName: string, curso: number }) {
+    console.log(alumno);
+    return this.http.post <alumnosApi>('https://629415d0089f87a57ac8f2a2.mockapi.io/api/v1/alumnos', alumno)
+      .pipe(
+        map(data => {
+          return data
+        }),
+        catchError(err => {
+          let message: string;
+          message = 'Error intentando agregar el alumno, intenta más tarde'
           return throwError(() => message);
         })
       )

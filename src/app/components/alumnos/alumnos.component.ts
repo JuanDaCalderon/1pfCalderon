@@ -23,11 +23,14 @@ export class AlumnosComponent implements OnInit {
   columnsToDisplay: string[] = ['select', 'id', 'nombre', 'curso', 'clases', 'avatar'];
   selection = new SelectionModel<alumnosOutput>(true, []);
 
-  constructor(private alumoService: AlumnosService, public dialog: MatDialog) {
-    this.alumoService.getAlumnos().subscribe(response => {
+  getAlumnosData() {
+    this.alumnoService.getAlumnos().subscribe(response => {
       this.data = response;
-      console.log(this.data);
     })
+  }
+
+  constructor(private alumnoService: AlumnosService, public dialog: MatDialog) {
+    this.getAlumnosData();
   }
 
   ngOnInit(): void { }
@@ -65,5 +68,10 @@ export class AlumnosComponent implements OnInit {
 
   openDeleteDialog() {
     this.dialog.open(DeleteAlumnoModalComponent);
+  }
+
+  refrescarAlumnos() {
+    this.data = null;
+    this.getAlumnosData();
   }
 }

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms'
+import { AlumnosService } from 'src/app/services/alumnos.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-add-alumno-modal',
@@ -10,7 +12,7 @@ export class AddAlumnoModalComponent implements OnInit {
   isLoading: boolean = false;
   addForm: FormGroup;
 
-  constructor() { }
+  constructor( private alumnoService: AlumnosService, private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.addForm = new FormGroup({
@@ -23,7 +25,22 @@ export class AddAlumnoModalComponent implements OnInit {
 
   onSubmit() {
     this.isLoading = true;
-    console.log(this.addForm?.value);
+    let alumno = this.addForm?.value;
+    this.alumnoService.postAlumno(alumno)
+      .subscribe({
+        next: (response) => {
+          console.log(response);
+          this.toastr.success('Alumno Agregado Correctamente');
+          this.isLoading = false;
+        },
+        error: (error) => {
+          this.toastr.error(error);
+          this.isLoading = false;
+        },
+        complete: () => {
+          this.isLoading = false;
+        }
+      })
   }
 
 }
