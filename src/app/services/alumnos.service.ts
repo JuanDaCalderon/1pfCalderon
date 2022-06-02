@@ -36,7 +36,6 @@ export class AlumnosService {
   }
 
   postAlumno(alumno: { firstName: string, middleName: string, lastName: string, curso: number }) {
-    console.log(alumno);
     return this.http.post <alumnosApi>('https://629415d0089f87a57ac8f2a2.mockapi.io/api/v1/alumnos', alumno)
       .pipe(
         map(data => {
@@ -45,6 +44,20 @@ export class AlumnosService {
         catchError(err => {
           let message: string;
           message = 'Error intentando agregar el alumno, intenta más tarde'
+          return throwError(() => message);
+        })
+      )
+  }
+
+  editAlumno(alumno: { firstName: string, middleName: string, lastName: string, curso: number }, id: string) {
+    return this.http.put <alumnosApi>('https://629415d0089f87a57ac8f2a2.mockapi.io/api/v1/alumnos/'+id, alumno)
+      .pipe(
+        map(data => {
+          return data
+        }),
+        catchError(err => {
+          let message: string;
+          message = 'Error intentando modificar el alumno, intenta más tarde'
           return throwError(() => message);
         })
       )

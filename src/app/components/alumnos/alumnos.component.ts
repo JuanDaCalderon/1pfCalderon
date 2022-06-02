@@ -64,9 +64,20 @@ export class AlumnosComponent implements OnInit {
   }
 
   openEditDialog() {
+    let alumnoEdit = null;
+    if (this.selection.selected[0] !== undefined && this.selection.selected[0] !== null) {
+      let fullName = this.selection.selected[0].nombre.split(' ');
+      alumnoEdit = {
+        id: this.selection.selected[0].id,
+        firstName: fullName[0],
+        middleName: fullName[1],
+        lastName: fullName[2],
+        curso: this.selection.selected[0].curso,
+      }
+    }
     this.dialog.open(EditAlumnoModalComponent, {
       width: '600px',
-      data: {dialog: this.dialog, alumnos: this.selection.selected[0]},
+      data: {dialog: this.dialog, alumnos: alumnoEdit},
     });
   }
 

@@ -19,12 +19,11 @@ export class EditAlumnoModalComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<EditAlumnoModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: {dialog:MatDialog, alumnos: alumnosOutput},
+    @Inject(MAT_DIALOG_DATA) public data: { dialog: MatDialog, alumnos: {id:string, firstName: string, middleName: string, lastName: string, curso: number } },
     private alumnoService: AlumnosService,
     private toastr: ToastrService
   ) {
     if (this.data.alumnos !== undefined && this.data.alumnos !== null) {
-      console.log(this.data.alumnos);
       this.isSelected = true;
       this.bodyCopy = '';
     }
@@ -32,9 +31,9 @@ export class EditAlumnoModalComponent implements OnInit {
 
   ngOnInit(): void {
     this.editForm = new FormGroup({
-      'firstName': new FormControl({value: this.data.alumnos?.nombre || null || null, disabled: !this.isSelected}, [Validators.required]),
-      'middleName': new FormControl({value: this.data.alumnos?.nombre || null || null, disabled: !this.isSelected}, [Validators.required]),
-      'lastName': new FormControl({value: this.data.alumnos?.nombre || null || null, disabled: !this.isSelected}, [Validators.required]),
+      'firstName': new FormControl({value: this.data.alumnos?.firstName || null || null, disabled: !this.isSelected}, [Validators.required]),
+      'middleName': new FormControl({value: this.data.alumnos?.middleName || null || null, disabled: !this.isSelected}, [Validators.required]),
+      'lastName': new FormControl({value: this.data.alumnos?.lastName || null || null, disabled: !this.isSelected}, [Validators.required]),
       'curso': new FormControl({value: this.data.alumnos?.curso || null, disabled: !this.isSelected}, [Validators.required])
     });
   }
@@ -42,6 +41,22 @@ export class EditAlumnoModalComponent implements OnInit {
   onSubmit() {
     this.isLoading = true;
     let alumno = this.editForm?.value;
+    this.alumnoService.editAlumno(alumno, this.data.alumnos.id)
+    .subscribe({
+      next: (response) => {
+        console.log(response);
+        this.toastr.success('Refresca la tabla de alumnos para ver la modificación', 'Alumno Modificado');
+        this.isLoading = false;
+        this.dialogRef.close();
+      },
+      error: (error) => {
+        this.toastr.error(error);
+        this.isLoading = false;
+      },
+      complete: () => {
+        this.isLoading = false;
+      }
+    })
   }
 
 }
