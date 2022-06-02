@@ -53,12 +53,13 @@ export class AlumnosComponent implements OnInit {
     if (!row) {
       return `${this.isAllSelected() ? 'selected' : 'noSelected'} all`;
     }
-    return `${this.selection.isSelected(row) ? 'selected' : 'noSelected'} row ${row.id}`;
+    return `${this.selection.isSelected(row) ? 'selected' : 'noSelected'} ${row.id}`;
   }
 
   openAddDialog() {
-    this.dialog.open(AddAlumnoModalComponent,{
-      width: '600px'
+    this.dialog.open(AddAlumnoModalComponent, {
+      width: '600px',
+      data: this.dialog,
     });
   }
 

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { AlumnosService } from 'src/app/services/alumnos.service';
 import { ToastrService } from 'ngx-toastr';
@@ -12,7 +13,12 @@ export class AddAlumnoModalComponent implements OnInit {
   isLoading: boolean = false;
   addForm: FormGroup;
 
-  constructor( private alumnoService: AlumnosService, private toastr: ToastrService) { }
+  constructor (
+    public dialogRef: MatDialogRef<AddAlumnoModalComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: MatDialog,
+    private alumnoService: AlumnosService,
+    private toastr: ToastrService
+    ) { }
 
   ngOnInit(): void {
     this.addForm = new FormGroup({
@@ -30,8 +36,10 @@ export class AddAlumnoModalComponent implements OnInit {
       .subscribe({
         next: (response) => {
           console.log(response);
-          this.toastr.success('Alumno Agregado Correctamente');
+          this.toastr.success('Refresca la tabla de alumnos para ver el nuevo registro', 'Alumno Agregado');
           this.isLoading = false;
+          this.addForm.reset();
+          this.dialogRef.close();
         },
         error: (error) => {
           this.toastr.error(error);
