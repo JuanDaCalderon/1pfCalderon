@@ -64,15 +64,21 @@ export class AlumnosComponent implements OnInit {
   }
 
   openEditDialog() {
-    this.dialog.open(EditAlumnoModalComponent);
+    this.dialog.open(EditAlumnoModalComponent, {
+      width: '600px',
+      data: {dialog: this.dialog, alumnos: this.selection.selected},
+    });
   }
 
   openDeleteDialog() {
-    this.dialog.open(DeleteAlumnoModalComponent);
+    this.dialog.open(DeleteAlumnoModalComponent, {
+      width: '400px',
+      data: {dialog: this.dialog, alumnos: this.selection.selected},
+    });
   }
 
   refrescarAlumnos() {
-    this.data = null;
+    this.data = [];
     this.getAlumnosData();
   }
 }

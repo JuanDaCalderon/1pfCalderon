@@ -49,4 +49,19 @@ export class AlumnosService {
         })
       )
   }
+
+  deleteAlumno(alumnos: alumnosOutput) {
+    console.log(alumnos);
+    return this.http.delete <alumnosApi>('https://629415d0089f87a57ac8f2a2.mockapi.io/api/v1/alumnos/'+ alumnos.id)
+      .pipe(
+        map(data => {
+          return data
+        }),
+        catchError(err => {
+          let message: string;
+          message = 'Error intentando eliminar el alumno, intenta más tarde'
+          return throwError(() => message);
+        })
+      )
+  }
 }
