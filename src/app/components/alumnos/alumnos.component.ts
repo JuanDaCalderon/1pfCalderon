@@ -66,7 +66,7 @@ export class AlumnosComponent implements OnInit {
   openEditDialog() {
     this.dialog.open(EditAlumnoModalComponent, {
       width: '600px',
-      data: {dialog: this.dialog, alumnos: this.selection.selected},
+      data: {dialog: this.dialog, alumnos: this.selection.selected[0]},
     });
   }
 
