@@ -5,26 +5,12 @@
 <div class="container-fluid d-flex p-3" style="width: 80%;">
     <div class="row">
         <div class="col d-flex">
-            <button class="mx-2" mat-raised-button color="primary" type="submit">Agregar alumno</button>
-            <button class="mx-2" mat-raised-button color="accent" type="submit">Modificar alumno</button>
-            <button class="mx-2" mat-raised-button color="warn" type="submit">Eliminar alumno</button>
+            <button class="mx-2" mat-raised-button color="primary" (click)="openAddDialog()">Agregar alumno</button>
+            <button class="mx-2" mat-raised-button color="accent" (click)="openEditDialog()">Modificar alumno</button>
+            <button class="mx-2" mat-raised-button color="warn" (click)="openDeleteDialog()">Eliminar alumno</button>
         </div>
     </div>
 </div>
-
-<!-- <table mat-table #alumnTable [dataSource]="dataSource" class="mat-elevation-z8 demo-table m-auto">
-    <ng-container *ngFor="let column of columns" [matColumnDef]="column.columnDef">
-        <th mat-header-cell *matHeaderCellDef>
-            {{column.header}}
-        </th>
-        <td mat-cell *matCellDef="let row">
-            {{ column.cell(row)}}
-        </td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table> -->
 
 <table mat-table [dataSource]="data" class="mat-elevation-z8 demo-table m-auto">
     <ng-container matColumnDef="select">

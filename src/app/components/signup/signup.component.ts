@@ -11,7 +11,7 @@ import { ToastrService } from 'ngx-toastr';
   encapsulation: ViewEncapsulation.None
 })
 export class SignupComponent implements OnInit {
-  emailFormControl = new FormControl('', [Validators.required, Validators.email]);
+  //emailFormControl = new FormControl('', [Validators.required, Validators.email]);
   signupForm: FormGroup;
   isLoading: boolean = false;
   constructor(private router: Router, private loginService: AccessService, private toastr: ToastrService) { }

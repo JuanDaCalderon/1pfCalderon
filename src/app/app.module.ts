@@ -19,6 +19,9 @@ import { CursosComponent } from './components/cursos/cursos.component';
 import { ClasesComponent } from './components/clases/clases.component';
 import { NameOutputPipe } from './pipes/name-output.pipe';
 import { HeadersTitlesDirective } from './directives/headers-titles.directive';
+import { AddAlumnoModalComponent } from './components/add-alumno-modal/add-alumno-modal.component';
+import { EditAlumnoModalComponent } from './components/edit-alumno-modal/edit-alumno-modal.component';
+import { DeleteAlumnoModalComponent } from './components/delete-alumno-modal/delete-alumno-modal.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +34,10 @@ import { HeadersTitlesDirective } from './directives/headers-titles.directive';
     CursosComponent,
     ClasesComponent,
     NameOutputPipe,
-    HeadersTitlesDirective
+    HeadersTitlesDirective,
+    AddAlumnoModalComponent,
+    EditAlumnoModalComponent,
+    DeleteAlumnoModalComponent
   ],
   imports: [
     BrowserModule,

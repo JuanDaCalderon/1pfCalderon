@@ -12,7 +12,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 
 export class LoginComponent implements OnInit {
-  emailFormControl = new FormControl('', [Validators.required, Validators.email]);
+  //emailFormControl = new FormControl('', [Validators.required, Validators.email]);
   loginForm: FormGroup;
   isLoading: boolean = false;
 
