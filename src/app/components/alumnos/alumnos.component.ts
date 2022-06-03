@@ -7,9 +7,8 @@ import { AddAlumnoModalComponent } from '../add-alumno-modal/add-alumno-modal.co
 import { EditAlumnoModalComponent } from '../edit-alumno-modal/edit-alumno-modal.component';
 import { DeleteAlumnoModalComponent } from '../delete-alumno-modal/delete-alumno-modal.component';
 
-import { MatTable, MatTableDataSource } from '@angular/material/table';
+import { MatTable } from '@angular/material/table';
 import { AlumnosService } from 'src/app/services/alumnos.service';
-import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-alumnos',
@@ -22,6 +21,7 @@ export class AlumnosComponent implements OnInit {
   data: alumnosOutput[] = [];
   columnsToDisplay: string[] = ['select', 'id', 'nombre', 'curso', 'clases', 'avatar'];
   selection = new SelectionModel<alumnosOutput>(true, []);
+  @ViewChild('alumnosTable') alumnosTable: MatTable<Element>;
 
   getAlumnosData() {
     this.alumnoService.getAlumnos().subscribe(response => {
@@ -91,5 +91,6 @@ export class AlumnosComponent implements OnInit {
   refrescarAlumnos() {
     this.data = [];
     this.getAlumnosData();
+    this.alumnosTable.renderRows();
   }
 }
