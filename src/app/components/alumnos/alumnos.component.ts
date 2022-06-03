@@ -26,11 +26,13 @@ export class AlumnosComponent implements OnInit, AfterViewInit {
   @ViewChild('alumnosTable') alumnosTable: MatTable<Element>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   dataSource = new MatTableDataSource<alumnosOutput>(this.data);
+  isLoadingResults: boolean = true;
 
   getAlumnosData() {
     this.alumnoService.getAlumnos().subscribe(response => {
       this.data = response;
       this.dataSource.data = response;
+      this.isLoadingResults = false;
     })
   }
 
@@ -112,6 +114,7 @@ export class AlumnosComponent implements OnInit, AfterViewInit {
   }
 
   refrescarAlumnos() {
+    this.isLoadingResults = true;
     this.data = [];
     this.getAlumnosData();
     this.alumnosTable.renderRows();
