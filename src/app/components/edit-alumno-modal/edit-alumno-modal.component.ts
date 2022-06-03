@@ -3,7 +3,7 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog
 import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { AlumnosService } from 'src/app/services/alumnos.service';
 import { ToastrService } from 'ngx-toastr';
-import { alumnosOutput } from 'src/app/other/users';
+//import { alumnosOutput } from 'src/app/other/users';
 
 @Component({
   selector: 'app-edit-alumno-modal',

@@ -13,7 +13,7 @@
     </div>
 </div>
 
-<table mat-table #alumnosTable [dataSource]="data" class="mat-elevation-z8 demo-table m-auto">
+<table mat-table #alumnosTable [dataSource]="dataSource" class="mat-elevation-z8 demo-table m-auto">
     <ng-container matColumnDef="select">
         <th mat-header-cell *matHeaderCellDef>
             <!-- <mat-checkbox
@@ -58,3 +58,16 @@
     <tr mat-header-row *matHeaderRowDef="columnsToDisplay" appHeadersTitles></tr>
     <tr mat-row *matRowDef="let myRowData; columns: columnsToDisplay" (click)="selection.toggle(myRowData)"></tr>
 </table>
+<div class="container-fluid d-flex pt-0 pb-3 px-0" style="width: 80%;">
+    <div class="row w-100 m-0 p-0">
+        <div class="col-12 p-0 m-0">
+            <mat-paginator
+                [pageSize]="12"
+                [pageSizeOptions]="[6, 12]"
+                [length]="data.length"
+                showFirstLastButtons
+                aria-label="Seleccionar página de alumnos">
+            </mat-paginator>
+        </div>
+    </div>
+</div>
